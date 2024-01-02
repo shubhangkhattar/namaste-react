@@ -1,16 +1,28 @@
-import RestaurantCard from "./RestaurantCard";
-import { useState, useEffect } from "react";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
+import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [listOFRestaurants, setListOfRestaurants] = useState([]);
   const [filteredRestaurants, setfilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const { setUserName, loggedInUser } = useContext(UserContext);
 
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
   console.log("Body Rendered");
   useEffect(() => {
     fetchData();
   }, []);
+
+  const onlineStatus = useOnlineStatus();
+
+  if (onlineStatus === false) {
+    return <h1>Offline</h1>;
+  }
 
   const fetchData = async () => {
     const data = await fetch(
@@ -31,16 +43,17 @@ const Body = () => {
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="search">
+      <div className="m-4 p-4  flex items-center">
         <input
           type="text"
-          className="search-box"
+          className="border border-solid border-black"
           value={searchText}
           onChange={(e) => {
             setSearchText(e.target.value);
           }}
         />
         <button
+          className="px-4 py-2 bg-green-100 m-4"
           onClick={() => {
             const filteredListRestaurant = listOFRestaurants.filter(
               (restaurant) =>
@@ -53,11 +66,16 @@ const Body = () => {
         >
           Search
         </button>
-      </div>
-
-      <div className="filter">
+        <div className="m-4 p-4  flex items-center">
+          <label>UserName :</label>
+          <input
+            className="border border-black p-2"
+            value={loggedInUser}
+            onChange={(e) => setUserName(e.target.value)}
+          ></input>
+        </div>
         <button
-          className="filter-btn"
+          className="px-4 py-2 bg-gray-50 rounded-lg"
           onClick={() => {
             const filteredRestaurants = listOFRestaurants.filter(
               (restaurant) => restaurant.info.avgRating > 4
@@ -68,9 +86,21 @@ const Body = () => {
           Top Rated Restaurant
         </button>
       </div>
-      <div className="res-container">
-        {filteredRestaurants.map((retaurant) => (
-          <RestaurantCard key={retaurant.info.id} resName={retaurant} />
+      <div className="flex flex-wrap">
+        {filteredRestaurants.map((restaurant) => (
+          <Link
+            key={restaurant.info.id}
+            to={"/restaurants/" + restaurant.info.id}
+          >
+            {restaurant.info.promoted ? (
+              <RestaurantCardPromoted
+                key={restaurant.info.id}
+                resName={restaurant}
+              />
+            ) : (
+              <RestaurantCard key={restaurant.info.id} resName={restaurant} />
+            )}
+          </Link>
         ))}
       </div>
     </div>

@@ -3,3 +3,6 @@ export const CDN_URL =
 
 export const LOGO_URL =
   "https://static.vecteezy.com/system/resources/previews/007/890/977/original/burger-logo-for-fast-food-business-free-vector.jpg";
+
+export const MENU =
+  "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.7095346&lng=77.1887698&restaurantId=616083&catalog_qa=undefined";
