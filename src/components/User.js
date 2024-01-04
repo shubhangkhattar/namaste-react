@@ -5,7 +5,7 @@ const User = ({ name, location }) => {
   const [count2, setCount2] = useState(0);
 
   useEffect(() => {
-    setInterval(console.log("shubhang is the best", 1000));
+    // setInterval(console.log("shubhang is the best", 1000));
     return () => {};
   }, []);
 

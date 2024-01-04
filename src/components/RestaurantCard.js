@@ -3,7 +3,10 @@ import { CDN_URL } from "../utils/constants";
 import UserContext from "../utils/UserContext";
 
 const RestaurantCard = (props) => {
+  // console.log(props);
   const { resName } = props;
+
+  // console.log("resData", resName);
 
   const { loggedInUser } = useContext(UserContext);
 
@@ -12,6 +15,7 @@ const RestaurantCard = (props) => {
 
   return (
     <div
+      data-testid="resCard"
       className="m-4 p-4 w-[250px] rounded-lg bg-gray-50 hover:bg-gray-200"
       style={{
         backgroundColor: "#f0f0f0",

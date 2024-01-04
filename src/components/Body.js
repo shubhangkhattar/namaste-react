@@ -3,7 +3,6 @@ import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
-import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
 
 const Body = () => {
@@ -13,7 +12,7 @@ const Body = () => {
   const { setUserName, loggedInUser } = useContext(UserContext);
 
   const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
-  console.log("Body Rendered");
+  // console.log("Body Rendered");
   useEffect(() => {
     fetchData();
   }, []);
@@ -31,6 +30,7 @@ const Body = () => {
 
     const json = await data.json();
 
+    // console.log(json);
     setListOfRestaurants(
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
@@ -46,6 +46,7 @@ const Body = () => {
       <div className="m-4 p-4  flex items-center">
         <input
           type="text"
+          data-testid="searchInput"
           className="border border-solid border-black"
           value={searchText}
           onChange={(e) => {

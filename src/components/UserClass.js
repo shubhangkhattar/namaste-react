@@ -18,7 +18,7 @@ class UserClass extends React.Component {
       "https://api.github.com/users/" + "shubhangkhattar"
     );
     const json = await data.json();
-    console.log(json);
+    // console.log(json);
 
     this,
       this.setState({
@@ -27,7 +27,7 @@ class UserClass extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log("component did mount");
+    // console.log("component did mount");
   }
 
   render() {
