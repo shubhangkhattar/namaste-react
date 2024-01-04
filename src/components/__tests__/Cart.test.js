@@ -1,5 +1,6 @@
 import RestaurantMenu from "../RestaurantMenu";
 import Header from "../Header";
+import Cart from "../Cart";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import MOCK_DATA from "../mocks/mockRestaurantMenu.json";
@@ -19,6 +20,7 @@ it("Should Load Restaurant Menu Components", async () => {
         <Provider store={appStore}>
           <Header />
           <RestaurantMenu />
+          <Cart />
         </Provider>
       </BrowserRouter>
     )
@@ -33,4 +35,10 @@ it("Should Load Restaurant Menu Components", async () => {
   fireEvent.click(addBtns[0]);
 
   expect(screen.getByText("Cart (1)")).toBeInTheDocument();
+  fireEvent.click(addBtns[1]);
+  expect(screen.getByText("Cart (2)")).toBeInTheDocument();
+
+  expect(screen.getAllByTestId("foodItems").length).toBe(10);
+  fireEvent.click(screen.getByRole("button", { name: "clearCart" }));
+  expect(screen.getAllByTestId("foodItems").length).toBe(8);
 });
