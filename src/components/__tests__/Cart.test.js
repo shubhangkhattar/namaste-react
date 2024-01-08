@@ -41,4 +41,5 @@ it("Should Load Restaurant Menu Components", async () => {
   expect(screen.getAllByTestId("foodItems").length).toBe(10);
   fireEvent.click(screen.getByRole("button", { name: "clearCart" }));
   expect(screen.getAllByTestId("foodItems").length).toBe(8);
+  expect(screen.getByText("Cart is empty Add Items to the cart"));
 });
